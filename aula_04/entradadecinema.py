@@ -1,28 +1,35 @@
 class EntradaCinema:
-    def __init__(self, dia, horario, valor, idade):
-        self.dia = dia
-        self.horario = horario
-        self.valor = valor
-        self.idade = idade
+    def __init__(self, dia, horario):
+        self.__dia = dia.lower() 
+        self.__horario = horario  
 
-    def calcular_desconto(self):
-        desconto = 0
+    def calcular_inteira(self):
+     
+        if self.__dia == "quarta-feira":
+            valor_base = 8.0  
+        elif self.__dia in ["segunda-feira", "terça-feira", "quinta-feira"]:
+            valor_base = 16.0 
+        else: 
+            valor_base = 20.0 
 
-        if self.dia() == "quarta-feira":
-            desconto += 0.5  
-            #50% de desconto às quartas-feiras
+        if self.__horario >= 17 and self.__dia != "quarta-feira":
+            valor_base *= 1.5 
+            
+        return valor_base
 
-        if self.horario >= 14 and self.horario < 18:
-            desconto += 0.2  
-            #20% de desconto para sessões entre 14h e 18h
+    def calcular_meia(self):
+     
+        return self.calcular_inteira() / 2
 
-        if self.idade < 12:
-            desconto += 0.3  
-            #30% de desconto para crianças menores de 12 anos
+if __name__ == "__main__":
+    print("Testando Entrada de Cinema")
 
-        elif self.idade >= 60:
-            desconto += 0.4  
-            #40% de desconto para idosos com 60 anos ou mais
+    sessao = EntradaCinema("domingo", 20)
+    
+    print(f"Sessão: {sessao._EntradaCinema__dia} às {sessao._EntradaCinema__horario}h")
+    print(f"Valor Inteira: R$ {sessao.calcular_inteira():.2f}")
+    print(f"Valor Meia: R$ {sessao.calcular_meia():.2f}")
 
-        return min(desconto, 1) * self.valor  
-        #O desconto máximo é o valor total da entrada
+    quarta = EntradaCinema("quarta-feira", 19)
+    print(f"\nSessão: quarta-feira às 19h")
+    print(f"Valor Único (Quarta): R$ {quarta.calcular_inteira():.2f}")
